@@ -1,0 +1,40 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'chatgpt_api_ui/css/chat_ui.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/styles/default.min.css">
+    <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/highlight.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <div class="sidebar">
+        <div class="sidebar-content-top">
+            <ul>
+                {% for chat in chats %}
+                    <li>{{ chat }}</li>
+                {% endfor %}
+                <li><a href="{% url 'admin:index' %}">Admin</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="content" id="app"></div>
+
+    <script>hljs.highlightAll();</script>
+    <!-- Load React. -->
+    <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+    <!-- Load React component. -->
+    <script type="text/babel" src="{% static 'chatgpt_api_ui/js/chat_ui.js' %}"></script>
+
+</div>
+</body>
+</html>
