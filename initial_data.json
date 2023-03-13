@@ -1,0 +1,24 @@
+[
+  {
+    "model": "chatgpt_api_ui.systemrole",
+    "pk": 1,
+    "fields": {
+      "name": "Helpful Assistant",
+      "description": "You are a helpful assistant."
+    }
+  },
+  {
+    "model": "chatgpt_api_ui.chat",
+    "pk": 1,
+    "fields": {
+      "system_role": 1,
+      "timestamp": "2023-01-1T09:41:00.000Z",
+      "name": "Helpful Assistant Chat",
+      "uuid": "463742ce-4eae-4847-a5ef-06b73c8ce08e",
+      "temperature": "1.0",
+      "max_tokens": 4096,
+      "presence_penalty": "0.0",
+      "frequency_penalty": "0.0"
+    }
+  }
+]

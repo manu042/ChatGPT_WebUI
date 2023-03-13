@@ -1,0 +1,17 @@
+version: "3"
+
+
+services:
+  chatgpt_webui:
+    image: chatgpt_webui
+    build:
+      context: .
+      dockerfile: deployment/Dockerfile
+    ports:
+      - "127.0.0.1:8000:8000"
+    environment:
+      USERNAME: admin
+      PASSWORD: admin
+      CHAT_GPT_API_KEY: sk-xxxxx-openai-api-key-xxxxxx
+    container_name: chatgpt_webui
+    restart: unless-stopped
