@@ -1,0 +1,57 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'chatgpt_api_ui/css/new_chat_form_style.css' %}">
+
+</head>
+<body>
+<h1>Create Chat</h1>
+<form method="post">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="{{ form.system_role.id_for_label }}">System Role:</label>
+        {{ form.system_role }}
+    </div>
+    <div class="form-group">
+        <label for="{{ form.name.id_for_label }}">Name:</label>
+        {{ form.name }}
+    </div>
+    <div class="form-group">
+        <label for="{{ form.max_tokens.id_for_label }}">Max Tokens:</label>
+        {{ form.max_tokens }}
+    </div>
+
+    <div class="form-group">
+        <label for="{{ form.temperature.id_for_label }}">Temperature:</label>
+        {{ form.temperature }}
+        <br>
+        {{ form.temperature.help_text }}
+        <br><br>
+    </div>
+
+    <div class="form-group">
+        <label for="{{ form.presence_penalty.id_for_label }}">Presence Penalty:</label>
+        {{ form.presence_penalty }}
+        <br><br>
+        {{ form.presence_penalty.help_text }}
+        <br>
+
+    </div>
+    <div class="form-group">
+        <label for="{{ form.frequency_penalty.id_for_label }}">Frequency Penalty:</label>
+        {{ form.frequency_penalty }}
+        <br><br>
+        {{ form.frequency_penalty.help_text }}
+        <br>
+    </div>
+    <br>
+    <input type="submit" value="Create Chat">
+</form>
+
+</body>
+</html>

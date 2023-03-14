@@ -3,17 +3,19 @@ import logging
 from datetime import datetime
 
 from django.conf import settings
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from chatgpt_api_ui.models import Chat, ChatMessage
 from django.contrib.auth.decorators import login_required
+from chatgpt_api_ui.forms import ChatForm
 
 
 logger = logging.getLogger('chatgpt_webui')
 
 
 @login_required(login_url='/admin/login/')
-def chat_view(request):
+def chat_view(request, uuid=None):
+
     context = {}
     if request.method == "GET":
         messages = ChatMessage.objects.all()
@@ -94,3 +96,15 @@ def get_messages(request):
         return JsonResponse({"messages": messages})
     else:
         return JsonResponse({"error": "Invalid request method"})
+
+
+def create_chat(request):
+    if request.method == 'POST':
+        form = ChatForm(request.POST)
+        if form.is_valid():
+            chat = form.save()
+            # do something with the new Chat object
+            return redirect('home')  # redirect to the home page
+    else:
+        form = ChatForm()
+    return render(request, 'chatgpt_api_ui/new_chat.html', {'form': form})
