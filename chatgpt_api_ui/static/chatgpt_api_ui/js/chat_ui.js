@@ -124,6 +124,7 @@ class Chat_ui extends React.Component {
         this.state = {
             messages: [],
             inputText: '',
+            chatUUID: '',
         };
         this.getMessages = this.getMessages.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -131,6 +132,15 @@ class Chat_ui extends React.Component {
     }
 
     componentDidMount() {
+        const uuidPattern = /^\/[a-f0-9-]+\/$/;
+        if (uuidPattern.test(window.location.pathname)) {
+            const chatUUID = window.location.pathname.replace(/^\/|\/$/g, '');
+
+            this.setState({chatUUID}, () => {
+                console.log(this.state.chatUUID);
+            })
+        }
+
         this.getMessages();
     }
 

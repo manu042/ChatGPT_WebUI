@@ -16,9 +16,10 @@
         <div class="sidebar-content-top">
             <ul>
                 {% for chat in chats %}
-                    <li>{{ chat }}</li>
+                    <li><a href="{% url 'chatgpt:chat_ui_uuid' chat.uuid %}">{{ chat.name }}</a></li>
                 {% endfor %}
                 <li><a href="{% url 'admin:index' %}">Admin</a></li>
+                <li><a href="{% url 'chatgpt:new_chat' %}">New Chat</a></li>
             </ul>
         </div>
     </div>
