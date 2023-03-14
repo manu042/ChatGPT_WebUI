@@ -5,7 +5,7 @@ ARG DJANGO_SUPERUSER_PASSWORD=admin
 ARG DJANGO_SUPERUSER_EMAIL="admin@example.com"
 
 
-RUN pip install Django==4.0.2 openai==0.27.2
+RUN pip install Django==4.0.2 openai==0.27.2 djangorestframework
 
 COPY .. /root/ChatGPT_WebUI
 

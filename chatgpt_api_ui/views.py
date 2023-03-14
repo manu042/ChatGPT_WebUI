@@ -85,19 +85,6 @@ def chat_completion(request):
         return JsonResponse({"error": "Invalid request method"})
 
 
-@login_required
-def get_messages(request):
-    if request.method == "GET":
-        messages = list()
-
-        for message in ChatMessage.objects.all():
-            messages.append(message.content)
-
-        return JsonResponse({"messages": messages})
-    else:
-        return JsonResponse({"error": "Invalid request method"})
-
-
 def create_chat(request):
     if request.method == 'POST':
         form = ChatForm(request.POST)

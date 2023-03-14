@@ -16,7 +16,19 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from rest_framework import routers
+from chatgpt_api_ui.viewsets import ChatViewSet, SystemRoleViewSet, ChatMessageViewSet
+
+# Routers provide an easy way of automatically determining the URL conf.
+router = routers.DefaultRouter()
+router.register(r'chats', ChatViewSet)
+router.register(r'system_roles', SystemRoleViewSet)
+router.register(r'chat_messages', ChatMessageViewSet)
+
+
 urlpatterns = [
     path('', include('chatgpt_api_ui.urls', namespace='chatgpt')),
     path('admin/', admin.site.urls),
+    path('api/', include(router.urls)),
+    path('api-auth/', include('rest_framework.urls')),
 ]

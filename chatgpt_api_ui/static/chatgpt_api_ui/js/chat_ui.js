@@ -1,6 +1,6 @@
 class ApiCall {
     static getMessages() {
-        return fetch('/get_messages/', {
+        return fetch('/api/chat_messages/', {
             method: 'GET',
         })
             .then(response => {
@@ -10,7 +10,12 @@ class ApiCall {
                 return response.json();
             })
             .then(data => {
-                return data.messages;
+                const messages = [];
+                for (let i = 0; i < data.length; i++) {
+                    messages.push(data[i].content);
+                }
+
+                return messages;
             })
             .catch(error => {
                 console.error('There was a problem with the API:', error);
