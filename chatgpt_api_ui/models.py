@@ -41,7 +41,7 @@ class ChatMessage(models.Model):
         (ASSISTANT, 'Assistant'),
     ]
 
-    chat = models.ForeignKey(Chat, on_delete=models.CASCADE)
+    chat = models.ForeignKey(Chat, on_delete=models.CASCADE, related_name="chat_messages")
     timestamp = models.DateTimeField(auto_now_add=True)
     content = models.TextField()
     role = models.CharField(max_length=9, choices=ROLE_CHOICES, default=USER)
