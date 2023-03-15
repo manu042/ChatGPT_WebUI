@@ -14,7 +14,7 @@ logger = logging.getLogger('chatgpt_webui')
 
 
 @login_required(login_url='/admin/login/')
-def chat_view(request, uuid=None):
+def chat_view(request, pk=None):
 
     context = {}
     if request.method == "GET":
