@@ -9,13 +9,17 @@ class SystemRoleSerializer(serializers.HyperlinkedModelSerializer):
         fields = "__all__"
 
 
-class ChatSerializer(serializers.HyperlinkedModelSerializer):
+class ChatMessageSerializer(serializers.HyperlinkedModelSerializer):
+    chat = serializers.PrimaryKeyRelatedField(queryset=Chat.objects.all())
+
     class Meta:
-        model = Chat
+        model = ChatMessage
         fields = "__all__"
 
 
-class ChatMessageSerializer(serializers.HyperlinkedModelSerializer):
+class ChatSerializer(serializers.ModelSerializer):
+    chat_messages = ChatMessageSerializer(many=True, read_only=True)
+
     class Meta:
-        model = ChatMessage
+        model = Chat
         fields = "__all__"
