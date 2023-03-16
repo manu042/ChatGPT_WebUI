@@ -1,6 +1,7 @@
 class ApiCall {
     static getMessages() {
-        return fetch('/api/chat_messages/', {
+        // `/api/chats/${chat_pk}/`
+        return fetch(`/api/chats/1`, {
             method: 'GET',
         })
             .then(response => {
@@ -11,8 +12,8 @@ class ApiCall {
             })
             .then(data => {
                 const messages = [];
-                for (let i = 0; i < data.length; i++) {
-                    messages.push(data[i].content);
+                for (let i = 0; i < data["chat_messages"].length; i++) {
+                    messages.push(data["chat_messages"][i].content);
                 }
 
                 return messages;
@@ -122,14 +123,14 @@ class ChatInput extends React.Component {
 }
 
 
-class Chat_ui extends React.Component {
+class Chat_ui_old extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
             messages: [],
             inputText: '',
-            chatUUID: '',
+            chatPK: '',
         };
         this.getMessages = this.getMessages.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -137,20 +138,22 @@ class Chat_ui extends React.Component {
     }
 
     componentDidMount() {
-        const uuidPattern = /^\/[a-f0-9-]+\/$/;
-        if (uuidPattern.test(window.location.pathname)) {
-            const chatUUID = window.location.pathname.replace(/^\/|\/$/g, '');
+        // const uuidPattern = /^\/[a-f0-9-]+\/$/;
+        const pkPattern = /^\/\d+\/$/;
+        if (pkPattern.test(window.location.pathname)) {
+            const chatPK = window.location.pathname.replace(/^\/|\/$/g, '');
 
-            this.setState({chatUUID}, () => {
-                console.log(this.state.chatUUID);
+            this.setState({chatPK}, () => {
+                console.log(this.state.chatPK);
             })
         }
-
         this.getMessages();
+
+        // createChatMessage("1", "test", "user").then();
     }
 
-    getMessages() {
-        ApiCall.getMessages()
+    getMessages(chatPK) {
+        ApiCall.getMessages(chatPK)
             .then((messages) => {
                 this.setState({messages});
             })
@@ -198,4 +201,4 @@ class Chat_ui extends React.Component {
 
 
 const chatApp = ReactDOM.createRoot(document.getElementById('app'));
-chatApp.render(<Chat_ui/>);
+chatApp.render(<Chat_ui_old/>);

@@ -33,8 +33,11 @@
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
     <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
 
-    <!-- Load React component. -->
-    <script type="text/babel" src="{% static 'chatgpt_api_ui/js/chat_ui.js' %}"></script>
+    <!-- Load JS modules. -->
+    <script type="text/babel" src="{% static 'chatgpt_api_ui/js/api-requests.js' %}"></script>
+    <script type="text/babel" src="{% static 'chatgpt_api_ui/js/messages-list.js' %}"></script>
+    <script type="text/babel" src="{% static 'chatgpt_api_ui/js/chat-input.js' %}"></script>
+    <script type="text/babel" src="{% static 'chatgpt_api_ui/js/chat_app.js' %}"></script>
 
 </div>
 </body>
