@@ -3,8 +3,8 @@ class ChatApp extends React.Component {
         super(props);
         this.state = {
             messages: ["Test 1", "Test 2"],
-            inputValue: "",
         };
+        // this.newMessage = this.newMessage.bind(this);
     }
 
     componentDidMount() {
@@ -25,36 +25,18 @@ class ChatApp extends React.Component {
             .catch((error) => {
                 console.error('Error fetching messages:', error);
             });
-
-        // createChatMessage("1", "test", "user").then();
     }
 
-    handleInputChange = (event) => {
-        this.setState({inputValue: event.target.value});
-    };
-
-    handleButtonClick = (value) => {
-        if (this.state.inputValue.trim() !== "") {
-            console.log("Button clicked with value:", value);
-            // Do something with the value, e.g. update the state of Chat_ui
-            const newMessage = this.state.inputValue;
-            const updatedMessages = [...this.state.messages, newMessage];
-            // this.setState({messages: updatedMessages, inputValue: ""});
-            this.setState({messages: updatedMessages, inputValue: ""}, () => {
-                console.log(this.state.messages);
-            });
-        }
-    };
+    newUserMessage = (userMessage) => {
+        const updatedMessages = [...this.state.messages, userMessage];
+        this.setState({messages: updatedMessages});
+    }
 
     render() {
         return (
             <React.Fragment>
                 <MessagesList messages={this.state.messages}/>
-                <ChatInput
-                    handleInputChange={this.handleInputChange}
-                    inputValue={this.state.inputValue}
-                    onButtonClick={this.handleButtonClick}
-                />
+                <ChatInput newUserMessage={this.newUserMessage}/>
             </React.Fragment>);
     }
 }
