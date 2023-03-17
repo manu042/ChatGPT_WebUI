@@ -2,8 +2,9 @@ import json
 import logging
 from datetime import datetime
 
-from django.shortcuts import render, redirect
+from django.urls import reverse
 from django.http import JsonResponse
+from django.shortcuts import render, redirect
 from chatgpt_api_ui.models import Chat, ChatMessage
 from django.contrib.auth.decorators import login_required
 from chatgpt_api_ui.forms import ChatForm
@@ -85,8 +86,8 @@ def create_chat(request):
         form = ChatForm(request.POST)
         if form.is_valid():
             chat = form.save()
-            # do something with the new Chat object
-            return redirect('chat_ui')  # redirect to the home page
+            return redirect(reverse('chatgpt_api_ui:chat_pk', args=[chat.pk]))
     else:
         form = ChatForm()
+
     return render(request, 'chatgpt_api_ui/new_chat.html', {'form': form})
