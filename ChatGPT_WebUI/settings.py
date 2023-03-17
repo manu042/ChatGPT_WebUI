@@ -131,6 +131,10 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+logs_directory = BASE_DIR / 'logs'
+if not os.path.exists(logs_directory):
+    os.makedirs(logs_directory)
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -138,7 +142,7 @@ LOGGING = {
         'file': {
             'level': 'INFO',
             'class': 'logging.FileHandler',
-            'filename': BASE_DIR / 'logs/chatgpt_api_ui.log',
+            'filename': logs_directory / 'chatgpt_api_ui.log',
             'formatter': 'verbose',
         },
     },
