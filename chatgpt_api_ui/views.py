@@ -16,16 +16,19 @@ logger = logging.getLogger('chatgpt_webui')
 
 @login_required(login_url='/admin/login/')
 def chat_view(request, pk=None):
+    if pk is None:
+        # If no primary key is provided, get the primary key of the newest Chat object
+        chat = Chat.objects.order_by('-pk').first()
+        if chat is not None:
+            return redirect(reverse('chatgpt_api_ui:chat_pk', args=[chat.pk]))
 
-    context = {}
-    if request.method == "GET":
-        messages = ChatMessage.objects.all()
-        chats = Chat.objects.all()
-        context = {
-            "chats": chats,
-            "messages": messages
-        }
-
+    # Render the chat_view.html template as before
+    messages = ChatMessage.objects.all()
+    chats = Chat.objects.all()
+    context = {
+        "chats": chats,
+        "messages": messages
+    }
     return render(request, 'chatgpt_api_ui/chat_view.html', context)
 
 
