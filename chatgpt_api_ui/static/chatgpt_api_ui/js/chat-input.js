@@ -1,10 +1,11 @@
 function ChatInput({newUserMessage}) {
     const [textAreaValue, setTextAreaValue] = React.useState("");
+    const [isLoading, setIsLoading] = React.useState(false);
 
     const handleKeyPress = (event) => {
         if (event.key === "Enter" && !event.shiftKey) {
             event.preventDefault();
-            handleOnButtonClick();
+            handleOnButtonClick().then();
         }
     };
 
@@ -12,10 +13,12 @@ function ChatInput({newUserMessage}) {
         setTextAreaValue(event.target.value);
     }
 
-    const handleOnButtonClick = () => {
-        if (textAreaValue.trim() !== "") {
-            newUserMessage(textAreaValue);
+    const handleOnButtonClick = async () => {
+        if (textAreaValue.trim() !== "" && !isLoading) {
+            setIsLoading(true);
             setTextAreaValue("");
+            await newUserMessage(textAreaValue);
+            setIsLoading(false);
         }
     }
 
@@ -23,6 +26,7 @@ function ChatInput({newUserMessage}) {
         <div className="chat-input-area">
             <textarea rows="6" value={textAreaValue} onChange={handleOnChange} onKeyDown={handleKeyPress}></textarea>
             <button type="submit" onClick={handleOnButtonClick}>Send</button>
+            <div className={`spinner ${isLoading ? 'visible' : 'hidden'}`}></div>
         </div>
     );
 }
