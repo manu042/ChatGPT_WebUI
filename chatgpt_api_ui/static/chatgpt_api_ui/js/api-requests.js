@@ -1,41 +1,35 @@
-async function getMessages() {
-    // `/api/chats/${chat_pk}/`
-    return fetch(`/api/chats/1`, {
-        method: 'GET',
-    })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            const messages = [];
-            for (let i = 0; i < data["chat_messages"].length; i++) {
-                messages.push(data["chat_messages"][i].content);
-            }
-
-            return messages;
-        })
-        .catch(error => {
-            console.error('There was a problem with the API:', error);
-            throw error;
+async function getChatData(chat_id) {
+    let response;
+    try {
+        response = await fetch(`/api/chats/${chat_id}`, {
+            method: 'GET',
         });
+    } catch (error) {
+        console.error('There was a problem with the fetch call:', error);
+        throw error;
+    }
+
+    if (!response.ok) {
+        const error = new Error('Network response was not ok');
+        console.error('There was a problem with the API:', error);
+        throw error;
+    }
+
+    return await response.json();
 }
 
 
-async function createChatMessage(chatId, content, role) {
-    const url = '/api/chat_messages/';
+async function chatCompletion(chatPK, message) {
+    let response;
     const csrfToken = document.cookie.split('; ').find(cookie => cookie.startsWith('csrftoken=')).split('=')[1];
 
     const data = {
-        chat: chatId,
-        content: content,
-        role: role,
+        chatPK: chatPK,
+        message: message,
     };
 
     try {
-        const response = await fetch(url, {
+        response = await fetch(`/api/chat_completion/`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -43,16 +37,16 @@ async function createChatMessage(chatId, content, role) {
             },
             body: JSON.stringify(data),
         });
-
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const responseData = await response.json();
-        console.log('New chat message created:', responseData);
-        return responseData;
     } catch (error) {
-        console.error('Error creating chat message:', error);
-        return null;
+        console.error('There was a problem with the fetch call:', error);
+        throw error;
     }
+
+    if (!response.ok) {
+        const error = new Error('Network response was not ok');
+        console.error('There was a problem with the API:', error);
+        throw error;
+    }
+
+    return await response.json();
 }

@@ -2,34 +2,47 @@ class ChatApp extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            messages: ["Test 1", "Test 2"],
+            chat: {},
+            messages: [],
         };
-        // this.newMessage = this.newMessage.bind(this);
     }
 
-    componentDidMount() {
-        // const uuidPattern = /^\/[a-f0-9-]+\/$/;
+    async componentDidMount() {
         const pkPattern = /^\/\d+\/$/;
         if (pkPattern.test(window.location.pathname)) {
             const chatPK = window.location.pathname.replace(/^\/|\/$/g, '');
 
-            this.setState({chatPK}, () => {
-                console.log(this.state.chatPK);
-            })
-        }
-
-        getMessages()
-            .then((messages) => {
-                this.setState({messages});
-            })
-            .catch((error) => {
-                console.error('Error fetching messages:', error);
+            this.setState({chatPK}, async () => {
+                try {
+                    const chat = await getChatData(this.state.chatPK);
+                    const messages = chat["chat_messages"];
+                    this.setState({chat, messages});
+                } catch (error) {
+                    console.error('Error fetching messages:', error);
+                }
             });
+        } else {
+            console.log("Invalid URL pattern.");
+        }
     }
 
-    newUserMessage = (userMessage) => {
-        const updatedMessages = [...this.state.messages, userMessage];
+    newUserMessage = async (userMessage) => {
+        const updatedMessages = [...this.state.messages, {content: userMessage}];
         this.setState({messages: updatedMessages});
+
+        try {
+            await chatCompletion(this.state.chat["chat_id"], userMessage, "user")
+
+            const chat = await getChatData(this.state.chatPK);
+            const messages = chat["chat_messages"];
+            this.setState({chat, messages});
+
+            // const serverResponse = await sendMessageToServer(userMessage);
+            // const updatedMessagesWithResponse = [...this.state.messages, {content: serverResponse}];
+            // this.setState({messages: updatedMessagesWithResponse});
+        } catch (error) {
+            console.error("Error sending message to server:", error);
+        }
     }
 
     render() {
