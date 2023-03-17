@@ -1,13 +1,13 @@
-import openai
+import json
 import logging
 from datetime import datetime
 
-from django.conf import settings
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from chatgpt_api_ui.models import Chat, ChatMessage
 from django.contrib.auth.decorators import login_required
 from chatgpt_api_ui.forms import ChatForm
+from chatgpt_api_ui.utilities import chat_completion
 
 
 logger = logging.getLogger('chatgpt_webui')
@@ -29,43 +29,38 @@ def chat_view(request, pk=None):
 
 
 @login_required
-def chat_completion(request):
+def chat_completion_view(request):
     if request.method == "POST":
-        chat_obj = Chat.objects.get_or_create(pk=1)[0]
+        # Parse the request body as JSON and retrieve the chatPK and message fields
+        data = json.loads(request.body)
+        chat_pk = data.get("chatPK")
+        message = data.get("message")
 
-        # Get message from request
-        message = request.POST.get("message")
+        try:
+            # Retrieve the Chat object associated with the chat PK
+            # If the Chat object does not exist, create a new one with the specified PK
+            chat_obj = Chat.objects.get_or_create(pk=chat_pk)[0]
 
-        logger.info('New message: {}'.format(message))
+            # Create messages list
+            messages = list()
+            messages.append({"role": "system", "content": chat_obj.system_role.description.replace("{{date}}", datetime.now().strftime("%d.%m.%Y"))})
+            messages_obj = chat_obj.chat_messages.all()
+
+            for msg in messages_obj:
+                messages.append({"role": msg.role, "content": msg.content})
+
+            logger.info('New message: {}'.format(message))
+            messages.append({"role": "user", "content": message})
+
+            # Get chat completion response
+            response = chat_completion(messages, chat_obj.temperature, chat_obj.presence_penalty, chat_obj.frequency_penalty)
+        except Exception as e:
+            return JsonResponse({"message": f"Error: {e}"})
 
         # Create ChatMessage object with user input
         new_message = ChatMessage.objects.create(chat_id=chat_obj.pk)
         new_message.content = message
         new_message.save()
-
-        # Create messages list
-        today = datetime.now().strftime("%d.%m.%Y")
-
-        messages = list()
-        messages.append({"role": "system", "content": chat_obj.system_role.description.replace("{{date}}", today)})
-
-        messages_obj = ChatMessage.objects.all()
-        for msg in messages_obj:
-            messages.append({"role": msg.role, "content": msg.content})
-
-        # https://platform.openai.com/docs/guides/chat/introduction
-        openai.api_key = settings.CHAT_GPT_API_KEY
-        try:
-            response = openai.ChatCompletion.create(
-                model="gpt-3.5-turbo",
-                messages=messages,
-                temperature=float(chat_obj.temperature),
-                presence_penalty=float(chat_obj.presence_penalty),
-                frequency_penalty=float(chat_obj.frequency_penalty)
-            )
-        except Exception as e:
-            logger.error('{}'.format(e))
-            return JsonResponse({"message": f"Error: {e}"})
 
         # Parse response
         response_message = response.choices[0].message.content
@@ -80,7 +75,7 @@ def chat_completion(request):
         new_message.total_tokens = response.usage.total_tokens
         new_message.save()
 
-        return JsonResponse({"message": response_message})
+        return JsonResponse({})
     else:
         return JsonResponse({"error": "Invalid request method"})
 
@@ -91,7 +86,7 @@ def create_chat(request):
         if form.is_valid():
             chat = form.save()
             # do something with the new Chat object
-            return redirect('home')  # redirect to the home page
+            return redirect('chat_ui')  # redirect to the home page
     else:
         form = ChatForm()
     return render(request, 'chatgpt_api_ui/new_chat.html', {'form': form})
