@@ -13,5 +13,6 @@ services:
       USERNAME: admin
       PASSWORD: admin
       CHAT_GPT_API_KEY: sk-xxxxx-openai-api-key-xxxxxx
+      DEVELOPMENT: TRUE
     container_name: chatgpt_webui
     restart: unless-stopped
