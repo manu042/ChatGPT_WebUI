@@ -14,3 +14,22 @@ Django based web interface for the ChatGPT API.
 
 Via http://127.0.0.1:8000/admin you can change the system role and the chat parameters for Temperature, 
 Presence_Penalty and Frequency_Penalty.
+
+
+## Setting Up Development Environment
+To set up the development environment for the project, you'll need to follow these steps:
+
+1. Clone the repository to your local machine using Git
+2. Install the required packages by running pip install -r requirements.txt
+3. Set the environment variables needed for development:
+   - DEVELOPMENT=TRUE 
+   - DJANGO_SETTINGS_MODULE=ChatGPT_WebUI.settings 
+   - CHAT_GPT_API_KEY=<sk-openai-api-key>
+4. Run the following commands to create the database and apply migrations:
+```bash
+python manage.py makemigrations
+python manage.py migrate
+```
+5. Create a superuser by with `python manage.py createsuperuser`
+6. Start the Django development server with `python manage.py runserver`
+7. Open your web browser, navigate to http://127.0.0.1:8000/ and login
