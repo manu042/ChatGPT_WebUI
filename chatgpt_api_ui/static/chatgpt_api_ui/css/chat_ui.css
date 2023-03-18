@@ -30,7 +30,7 @@ pre {
     height: 100vh;
 }
 
-.sidebar-content-bottom{
+.sidebar-content-bottom {
     position: fixed;
     bottom: 0;
 }
@@ -102,12 +102,13 @@ textarea {
 
 .spinner {
     display: inline-block;
-    width: 30px;
-    height: 30px;
-    border: 4px solid #f3f3f3;
-    border-top: 4px solid #3498db;
+    width: 25px;
+    height: 25px;
+    border: 4px solid rgba(12, 12, 12, 0.6);
+    border-top: 4px solid rgba(0, 0, 255, 0.62);
     border-radius: 50%;
     animation: spin 2s linear infinite;
+    margin-left: 0.5rem;
     visibility: hidden; /* Set initial visibility to hidden */
 }
 
@@ -126,4 +127,14 @@ textarea {
     100% {
         transform: rotate(360deg);
     }
+}
+
+.send-icon-btn {
+    background-image: url('../icons/paper-plane.png');
+    background-size: cover;
+    background-color: transparent;
+    width: 25px;
+    height: 25px;
+    border: none;
+    margin-left: 0.5rem;
 }

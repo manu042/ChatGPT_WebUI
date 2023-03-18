@@ -25,7 +25,7 @@ function ChatInput({newUserMessage}) {
     return (
         <div className="chat-input-area">
             <textarea rows="6" value={textAreaValue} onChange={handleOnChange} onKeyDown={handleKeyPress}></textarea>
-            <button type="submit" onClick={handleOnButtonClick}>Send</button>
+            <button className="send-icon-btn" type="submit" onClick={handleOnButtonClick}></button>
             <div className={`spinner ${isLoading ? 'visible' : 'hidden'}`}></div>
         </div>
     );
