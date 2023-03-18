@@ -7,8 +7,6 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" type="text/css" href="{% static 'chatgpt_api_ui/css/chat_ui.css' %}">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/styles/default.min.css">
-    <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/highlight.min.js"></script>
 </head>
 <body>
 <div class="container">
@@ -18,6 +16,10 @@
                 {% for chat in chats %}
                     <li><a href="{% url 'chatgpt:chat_pk' chat.pk %}">{{ chat.name }}</a></li>
                 {% endfor %}
+            </ul>
+        </div>
+        <div class="sidebar-content-bottom">
+            <ul>
                 <li><a href="{% url 'admin:index' %}">Admin</a></li>
                 <li><a href="{% url 'chatgpt:new_chat' %}">New Chat</a></li>
             </ul>
@@ -26,7 +28,8 @@
 
     <div class="content" id="app"></div>
 
-    <script>hljs.highlightAll();</script>
+    {#    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>#}
+
     <!-- Load React. -->
     <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
     <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>

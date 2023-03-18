@@ -30,6 +30,11 @@ pre {
     height: 100vh;
 }
 
+.sidebar-content-bottom{
+    position: fixed;
+    bottom: 0;
+}
+
 .content {
     background-color: #363636;
     flex-basis: 0;
