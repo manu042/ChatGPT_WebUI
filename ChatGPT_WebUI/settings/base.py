@@ -15,21 +15,6 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-os.environ["DEVELOPMENT"] = "True"
-CHAT_GPT_API_KEY = os.environ.get("CHAT_GPT_API_KEY")
-
-if os.environ.get("DEVELOPMENT"):
-    # SECURITY WARNING: keep the secret key used in production secret!
-    SECRET_KEY = 'django-insecure-x2^-$*u(*yodps1l#9^7et^&#dwq-%pjuantem)-e=g&t4ld*m'
-
-    DEBUG = True
-
-    ALLOWED_HOSTS = ['*']
-else:
-    # Todo
-    SECRET_KEY = 'django-insecure-x2^-$*u(*yodps1l#9^7et^&#dwq-%pjuantem)-e=g&t4ld*m'
-    DEBUG = False
-    ALLOWED_HOSTS = ['*']
 
 # Application definition
 INSTALLED_APPS = [
@@ -82,19 +67,9 @@ REST_FRAMEWORK = {
 
 WSGI_APPLICATION = 'ChatGPT_WebUI.wsgi.application'
 
-# Database
-# https://docs.djangoproject.com/en/4.1/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -110,27 +85,26 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
-
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_TZ = True
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
-
 STATIC_URL = 'static/'
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+
+# Log settings
 logs_directory = BASE_DIR / 'logs'
 if not os.path.exists(logs_directory):
     os.makedirs(logs_directory)
