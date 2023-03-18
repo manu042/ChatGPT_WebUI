@@ -23,16 +23,14 @@ function MessagesList(props) {
     return (
         <div className="messages-list">
             {messages.map((message, index) => (
-                <pre key={index}>
-                    <div className="message" key={index}>
-                        <MessageRole role={message.role}/>
+                <div className="message" key={index}>
+                    <MessageRole role={message.role}/>
 
-                        <div className="message-content">
-                            {message.content}
-                            {/*<div dangerouslySetInnerHTML={{__html: marked.parse(message.content)}}/>*/}
-                        </div>
+                    <div className="message-content">
+                        {message.content}
+                        {/*<div dangerouslySetInnerHTML={{__html: marked.parse(message.content)}}/>*/}
                     </div>
-                </pre>
+                </div>
             ))}
             <div ref={messagesEndRef}></div>
         </div>
