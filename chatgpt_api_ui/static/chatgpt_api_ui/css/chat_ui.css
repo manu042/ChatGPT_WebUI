@@ -73,6 +73,10 @@ pre {
     grid-template-columns: auto auto;
 }
 
+.message-content {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
 
 .message-role {
     display: inline-block;
