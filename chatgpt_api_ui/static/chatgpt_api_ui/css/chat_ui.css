@@ -13,6 +13,7 @@ li, li a {
 pre {
     white-space: pre-wrap;
     word-wrap: break-word;
+    margin: 0;
 }
 
 .container {
@@ -24,7 +25,7 @@ pre {
 }
 
 .sidebar {
-    background-color: #3d3d3c;
+    background-color: rgb(35, 35, 40);
     flex-basis: 15%;
     flex-grow: 1;
     height: 100vh;
@@ -47,26 +48,57 @@ pre {
 
 }
 
+
 .messages-list {
     overflow: auto;
-    background-color: #363636;
+    background-color: #121212;
     flex: 1;
 }
 
 .message {
-    font-size: 0.9rem;
+    font-size: 1.0rem;
     font-family: system-ui;
 
     background-color: #323334;
-    border-style: solid;
-    border-color: #cc6112;
 
     padding-top: 1rem;
     padding-bottom: 1rem;
-    padding-left: 10rem;
-    padding-right: 10rem;
+    padding-left: 8rem;
+    padding-right: 8rem;
     margin-bottom: 0.5rem;
+
+    display: flex;
+    gap: 0;
+    grid-template-rows: 1fr;
+    grid-template-columns: auto auto;
 }
+
+
+.message-role {
+    display: inline-block;
+    width: 30px; /* Adjust the square size by changing width and height */
+    height: 30px;
+    text-align: center;
+    line-height: 30px; /* Should match the height of the square */
+    font-size: 14px; /* Adjust the font size if needed */
+    font-family: Arial, sans-serif; /* Change the font family if needed */
+    margin-right: 1rem;
+    flex-grow: 0;
+    flex-shrink: 0;
+    font-weight: bold;
+
+}
+
+.ai-message-icon {
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+}
+
+.user-message-icon {
+    background-color: rgba(58, 58, 206, 0.62);
+    color: white;
+}
+
 
 .chat-input-area {
     flex: none; /* Do not grow or shrink */
