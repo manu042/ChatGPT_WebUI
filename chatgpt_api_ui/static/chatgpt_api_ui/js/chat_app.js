@@ -27,7 +27,7 @@ class ChatApp extends React.Component {
     }
 
     newUserMessage = async (userMessage) => {
-        const updatedMessages = [...this.state.messages, {content: userMessage}];
+        const updatedMessages = [...this.state.messages, {content: userMessage, role: "user"}];
         this.setState({messages: updatedMessages});
 
         try {
