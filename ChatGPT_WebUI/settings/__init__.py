@@ -1,10 +1,6 @@
 from ChatGPT_WebUI.settings.base import *
 
-try:
-    CHAT_GPT_API_KEY = os.environ["CHAT_GPT_API_KEY"]
-except KeyError:
-    raise KeyError("OpenAi API key missing.")
-
+CHAT_GPT_API_KEY = os.environ.get("CHAT_GPT_API_KEY2")
 
 if os.environ.get("DEVELOPMENT"):
     from ChatGPT_WebUI.settings.development import *
