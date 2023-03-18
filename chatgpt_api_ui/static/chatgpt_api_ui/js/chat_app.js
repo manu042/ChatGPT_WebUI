@@ -37,9 +37,6 @@ class ChatApp extends React.Component {
             const messages = chat["chat_messages"];
             this.setState({chat, messages});
 
-            // const serverResponse = await sendMessageToServer(userMessage);
-            // const updatedMessagesWithResponse = [...this.state.messages, {content: serverResponse}];
-            // this.setState({messages: updatedMessagesWithResponse});
         } catch (error) {
             console.error("Error sending message to server:", error);
         }

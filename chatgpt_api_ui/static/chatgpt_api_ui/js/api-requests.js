@@ -43,6 +43,9 @@ async function chatCompletion(chatPK, message) {
     }
 
     if (!response.ok) {
+        const r = await response.json();
+        alert(`Error: ${r.error}`);
+
         const error = new Error('Network response was not ok');
         console.error('There was a problem with the API:', error);
         throw error;

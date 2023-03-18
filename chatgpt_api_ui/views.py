@@ -10,7 +10,6 @@ from django.contrib.auth.decorators import login_required
 from chatgpt_api_ui.forms import ChatForm
 from chatgpt_api_ui.utilities import chat_completion
 
-
 logger = logging.getLogger('chatgpt_webui')
 
 
@@ -59,7 +58,8 @@ def chat_completion_view(request):
             # Get chat completion response
             response = chat_completion(messages, chat_obj.temperature, chat_obj.presence_penalty, chat_obj.frequency_penalty)
         except Exception as e:
-            return JsonResponse({"message": f"Error: {e}"})
+            logger.error(e)
+            return JsonResponse({'error': f"{e}"}, status=500)
 
         # Create ChatMessage object with user input
         new_message = ChatMessage.objects.create(chat_id=chat_obj.pk)
@@ -79,9 +79,9 @@ def chat_completion_view(request):
         new_message.total_tokens = response.usage.total_tokens
         new_message.save()
 
-        return JsonResponse({})
+        return JsonResponse({}, status=200)
     else:
-        return JsonResponse({"error": "Invalid request method"})
+        return JsonResponse({"error": "Invalid request method"}, status=500)
 
 
 def create_chat(request):
