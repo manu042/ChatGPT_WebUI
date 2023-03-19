@@ -12,8 +12,19 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 import os
 from pathlib import Path
 
+
+if os.environ.get("DEVELOPMENT"):
+    from ChatGPT_WebUI.development import *
+else:
+    from ChatGPT_WebUI.production import *
+
+
+CHAT_GPT_API_KEY = os.environ.get("CHAT_GPT_API_KEY")
+
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent
+
 
 # Application definition
 INSTALLED_APPS = [
