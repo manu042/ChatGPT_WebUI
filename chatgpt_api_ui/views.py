@@ -91,7 +91,8 @@ def create_chat(request):
             chat = form.save()
             return redirect(reverse('chatgpt_api_ui:chat_pk', args=[chat.pk]))
     else:
-        initial_values = {'temperature': 1, 'presence_penalty': 0, 'frequency_penalty': 0}
+        chat_name = "Chat {}".format(Chat.objects.count() + 1)
+        initial_values = {'name': chat_name, 'temperature': 1, 'presence_penalty': 0, 'frequency_penalty': 0}
         form = ChatForm(initial=initial_values)
 
     return render(request, 'chatgpt_api_ui/new_chat.html', {'form': form})
