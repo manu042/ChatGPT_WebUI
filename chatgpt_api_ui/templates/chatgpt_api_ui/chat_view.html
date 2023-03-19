@@ -1,49 +1,48 @@
+{% extends 'chatgpt_api_ui/base.html' %}
+
 {% load static %}
 
+{% block title %}ChatGPT API{% endblock %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>ChatGPT API</title>
+
+{% block head_links %}
     <link rel="stylesheet" type="text/css" href="{% static 'chatgpt_api_ui/css/chat_ui.css' %}">
-    <link rel="shortcut icon" type="image/png" href="{% static 'chatgpt_api_ui/icons/favicon.png' %}"/>
+{% endblock %}
 
-</head>
-<body>
-<div class="container">
-    <div class="sidebar">
-        <div class="sidebar-content-top">
-            <ul>
-                {% for chat in chats %}
-                    <li><a href="{% url 'chatgpt:chat_pk' chat.pk %}">{{ chat.name }}</a></li>
-                {% endfor %}
-            </ul>
+
+{% block content %}
+    <div class="container">
+        <div class="sidebar">
+            <div class="sidebar-content-top">
+                <ul>
+                    {% for chat in chats %}
+                        <li><a href="{% url 'chatgpt:chat_pk' chat.pk %}">{{ chat.name }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="sidebar-content-bottom">
+                <ul>
+                    <li><a href="{% url 'admin:index' %}">Admin</a></li>
+                    <li><a href="{% url 'chatgpt:new_system_role' %}">New System Role</a></li>
+                    <li><a href="{% url 'chatgpt:new_chat' %}">New Chat</a></li>
+                </ul>
+            </div>
         </div>
-        <div class="sidebar-content-bottom">
-            <ul>
-                <li><a href="{% url 'admin:index' %}">Admin</a></li>
-                <li><a href="{% url 'chatgpt:new_chat' %}">New Chat</a></li>
-            </ul>
-        </div>
+
+        <div class="content" id="app"></div>
+
+        {#    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>#}
+
+        <!-- Load React. -->
+        <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
+        <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+        <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+        <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+        <!-- Load JS modules. -->
+        <script type="text/babel" src="{% static 'chatgpt_api_ui/js/api-requests.js' %}"></script>
+        <script type="text/babel" src="{% static 'chatgpt_api_ui/js/messages-list.js' %}"></script>
+        <script type="text/babel" src="{% static 'chatgpt_api_ui/js/chat-input.js' %}"></script>
+        <script type="text/babel" src="{% static 'chatgpt_api_ui/js/chat_app.js' %}"></script>
     </div>
-
-    <div class="content" id="app"></div>
-
-    {#    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>#}
-
-    <!-- Load React. -->
-    <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
-    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
-    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
-
-    <!-- Load JS modules. -->
-    <script type="text/babel" src="{% static 'chatgpt_api_ui/js/api-requests.js' %}"></script>
-    <script type="text/babel" src="{% static 'chatgpt_api_ui/js/messages-list.js' %}"></script>
-    <script type="text/babel" src="{% static 'chatgpt_api_ui/js/chat-input.js' %}"></script>
-    <script type="text/babel" src="{% static 'chatgpt_api_ui/js/chat_app.js' %}"></script>
-
-</div>
-</body>
-</html>
+{% endblock %}

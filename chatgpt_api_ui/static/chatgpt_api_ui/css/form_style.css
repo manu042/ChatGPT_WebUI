@@ -1,0 +1,66 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: rgb(35, 35, 40);
+    color: #fff;
+}
+
+h1 {
+    font-size: 2em;
+    margin-bottom: 1em;
+}
+
+form {
+    width: 50%;
+    margin: auto;
+    padding: 1em;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #444;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 0.5em;
+    color: #fff;
+}
+
+input[type="text"], textarea {
+    width: 100%;
+    padding: 0.5em;
+    margin-bottom: 1em;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    background-color: #fff;
+    color: #333;
+}
+
+input[type="submit"], button {
+    background-color: rgba(0, 0, 255, 1);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1em;
+    cursor: pointer;
+    margin-right: 1em;
+}
+
+input[type="submit"]:hover, button:hover {
+    background-color: darkblue;
+}
+
+.cancel-button {
+    background-color: red;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1em;
+    cursor: pointer;
+}
+
+.cancel-button:hover {
+    background-color: darkred;
+}

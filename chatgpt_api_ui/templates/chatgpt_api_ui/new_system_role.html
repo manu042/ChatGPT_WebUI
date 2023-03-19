@@ -1,0 +1,24 @@
+{% extends 'chatgpt_api_ui/base.html' %}
+
+{% load static %}
+
+{% block title %}Create System Role{% endblock %}
+
+
+{% block head_links %}
+    <link rel="stylesheet" type="text/css" href="{% static 'chatgpt_api_ui/css/form_style.css' %}">
+{% endblock %}
+
+
+{% block content %}
+    <h1>Create System Role</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label for="{{ form.name.id_for_label }}">Name:</label>
+        {{ form.name }}
+        <label for="{{ form.description.id_for_label }}">Description:</label>
+        {{ form.description }}
+        <input type="submit" value="Save">
+        <button type="button" onclick="window.location.href='{% url 'chatgpt:chat_ui' %}'" class="cancel-button">Cancel</button>
+    </form>
+{% endblock %}
