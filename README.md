@@ -3,6 +3,7 @@ Django based web interface for the ChatGPT API.
 
 **Note: At the moment this is only a proof of concept and the server should not be exposed to the internet.**
 
+<img src="./Screenshot.png" alt="Screenshot" width="300"/>
 
 ## Setup
 1. Install Docker and Docker Compose if you haven't already done so.
