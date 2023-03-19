@@ -7,7 +7,7 @@ from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from chatgpt_api_ui.models import Chat, ChatMessage
 from django.contrib.auth.decorators import login_required
-from chatgpt_api_ui.forms import ChatForm
+from chatgpt_api_ui.forms import SystemRoleForm, ChatForm
 from chatgpt_api_ui.utilities import chat_completion
 
 logger = logging.getLogger('chatgpt_webui')
@@ -82,6 +82,19 @@ def chat_completion_view(request):
         return JsonResponse({}, status=200)
     else:
         return JsonResponse({"error": "Invalid request method"}, status=500)
+
+
+def create_system_role(request):
+    if request.method == 'POST':
+        form = SystemRoleForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect(reverse('chatgpt_api_ui:chat_ui'))
+    else:
+        initial_values = {'name': "Helpful Assistant", "description": "You are a helpful assistant."}
+        form = SystemRoleForm(initial=initial_values)
+
+    return render(request, 'chatgpt_api_ui/new_system_role.html', {'form': form})
 
 
 def create_chat(request):

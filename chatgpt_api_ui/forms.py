@@ -1,6 +1,12 @@
 from django import forms
 from django.core.validators import MinValueValidator, MaxValueValidator
-from chatgpt_api_ui.models import Chat
+from chatgpt_api_ui.models import SystemRole, Chat
+
+
+class SystemRoleForm(forms.ModelForm):
+    class Meta:
+        model = SystemRole
+        fields = ['name', 'description']
 
 
 class ChatForm(forms.ModelForm):
